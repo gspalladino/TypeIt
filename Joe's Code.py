@@ -14,19 +14,20 @@ class TypeItGame:
         self.gameWin = tk.Toplevel(self.mainWin)
         self.promptCanvas = tk.Canvas(self.gameWin, bg = 'green')
         self.promptCanvas.grid(row = 0, column = 0)
-        self.promptCanvas.bind("<KeyPress>", self.typeIt)
-        self.canvasText = self.promptCanvas.create_text(100, 50, text = '')
-        self.promptEntry = tk.Entry(self.gameWin,bg = 'ivory', fg = 'black')
-        self.promptEntry.grid(row=1,column=0)
+        self.gameWin.bind("<KeyPress>", self.typeIt)
+        self.canvasText = self.promptCanvas.create_text(100, 50, text = 'hi')
+        # self.promptEntry = tk.Entry(self.gameWin,bg = 'ivory', fg = 'black')
+        # self.promptEntry.grid(row=1,column=0)
         self.pointTally = 0
         self.pointTallyLabel = tk.Label(self.gameWin,bg = 'ivory', fg = 'black', text = 0)
+        self.pointTallyLabel.grid(row=0,column=1)
     def typeIt(self,event):
         keysym = event.keysym
         if self.pointTally == 0 and keysym in string.ascii_lowercase:
             self.pointTally += 1
         while self.pointTally <= 100 and self.pointTally > 0:
             self.prompt = random.choice(string.ascii_lowercase)
-            self.canvasText['text'] = self.prompt
+            self.promptCanvas.itemconfig(self.canvasText,text = self.prompt)
             # inpStr = "type " + self.prompt + ":"
             # userInp = input(inpStr)
             if keysym == self.prompt:
@@ -34,6 +35,7 @@ class TypeItGame:
                 self.pointTallyLabel['text'] = self.pointTally
             else:
                 print("you scored ", self.pointTally," points")
+                self.gameWin.destroy()
                 break
         while self.pointTally > 100 and self.pointTally <= 200:
             prompt = random.choice(string.ascii_letters)
