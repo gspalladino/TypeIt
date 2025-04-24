@@ -25,18 +25,19 @@ class TypeItGame:
         keysym = event.keysym
         if self.pointTally == 0 and keysym in string.ascii_lowercase:
             self.pointTally += 1
+            self.labelName(random.choice(string.ascii_lowercase))
+            return print('game started')
         while self.pointTally <= 100 and self.pointTally > 0:
-            self.prompt = random.choice(string.ascii_lowercase)
-            self.promptCanvas.itemconfig(self.canvasText,text = self.prompt)
             # inpStr = "type " + self.prompt + ":"
             # userInp = input(inpStr)
             if keysym == self.prompt:
                 self.pointTally += 1
                 self.pointTallyLabel['text'] = self.pointTally
+                self.labelName(random.choice(string.ascii_lowercase))
+                return print('point total:', self.pointTally)
             else:
                 print("you scored ", self.pointTally," points")
                 self.gameWin.destroy()
-                break
         while self.pointTally > 100 and self.pointTally <= 200:
             prompt = random.choice(string.ascii_letters)
             inpStr = 'type ' + prompt + ":"
@@ -46,7 +47,11 @@ class TypeItGame:
                 print(self.pointTally)
             else:
                 print("you scored ", self.pointTally, " points")
-                break
+                self.gameWin.destroy()
+    def labelName(self,prompt):
+        self.prompt = prompt
+        self.promptCanvas.itemconfig(self.canvasText, text=self.prompt)
+
     def go(self):
         self.mainWin.mainloop()
 
