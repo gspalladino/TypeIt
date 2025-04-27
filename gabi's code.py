@@ -64,14 +64,23 @@ class TypeItGame:
                 self.openDeathScreen()
                 return
         while self.pointTally > 100 and self.pointTally <= 200:
-            prompt = random.choice(string.ascii_letters)
-            inpStr = 'type ' + prompt + ":"
-            userInp = input(inpStr)
-            if userInp == prompt:
+            # prompt = random.choice(string.ascii_letters)
+            # inpStr = 'type ' + prompt + ":"
+            # userInp = input(inpStr)
+            # if userInp == prompt:
+            #     self.pointTally += 1
+            #     print(self.pointTally)
+            # else:
+            #     # print("you scored ", self.pointTally, " points")
+            #     self.openDeathScreen()
+            #     return
+            if keysym == self.prompt:
                 self.pointTally += 1
-                print(self.pointTally)
+                self.pointTallyLabel['text'] = self.pointTally
+                self.labelName(random.choice(string.ascii_letters))
+                return print('point total:', self.pointTally)
             else:
-                # print("you scored ", self.pointTally, " points")
+                print("you scored ", self.pointTally, " points")
                 self.openDeathScreen()
                 return
     def labelName(self,prompt):
