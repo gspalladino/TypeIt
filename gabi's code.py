@@ -1,11 +1,7 @@
 import random
 import string
 import tkinter as tk
-import tkinter.messagebox as messagebox
-
-
 import PIL.Image as Image
-
 import PIL.ImageTk as ImageTk
 
 
