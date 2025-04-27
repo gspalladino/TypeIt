@@ -89,7 +89,7 @@ class TypeItGame:
         self.deathScreen.geometry("250x150")
         self.deathScreen['bg'] = 'ivory'
 
-        gameOverLabel = tk.Label(self.deathScreen, text=f"Game Over!\nYou scored {self.pointTally} points.", bg='ivory', fg="red",
+        gameOverLabel = tk.Label(self.deathScreen, text=f"Game over :(\nYou scored {self.pointTally} points.", bg='ivory', fg="red",
                                  font="Comfortaa 20")
         gameOverLabel.pack(pady=10)
 
