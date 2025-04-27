@@ -91,18 +91,26 @@ class TypeItGame:
         print("Death screen should appear!")
         self.deathScreen = tk.Toplevel(self.mainWin)
         self.deathScreen.title("Game Over")
-        self.deathScreen.geometry("250x150")
+        self.deathScreen.geometry("350x480")
         self.deathScreen['bg'] = 'ivory'
 
         gameOverLabel = tk.Label(self.deathScreen, text=f"Game over :(\nYou scored {self.pointTally} points.", bg='ivory', fg="red",
                                  font="Comfortaa 20")
         gameOverLabel.pack(pady=10)
 
-        playAgainButton = tk.Button(self.deathScreen, text="Play Again", command=self.playAgain, bg='green', fg='green')
-        playAgainButton.pack(pady=5)
+        brokentypeit = Image.open("images/broken3.png")
+        self.broken_image = ImageTk.PhotoImage(brokentypeit)
+        brokenImageLabel = tk.Label(self.deathScreen, image=self.broken_image, bg='ivory')
+        brokenImageLabel.pack(pady=5)
 
-        quitButton = tk.Button(self.deathScreen, text="Quit", command=self.quitGame, bg='red', fg='black')
-        quitButton.pack(pady=5)
+        buttonFrame = tk.Frame(self.deathScreen, bg='ivory')
+        buttonFrame.pack(pady=10)
+
+        playAgainButton = tk.Button(buttonFrame, text="Play Again!", command=self.playAgain, bg='green', fg='green', font="Comfortaa")
+        playAgainButton.pack(side='left', padx=5)
+
+        quitButton = tk.Button(buttonFrame, text="Quit", command=self.quitGame, bg='red', fg='black', font="Comfortaa")
+        quitButton.pack(side='left', padx=5)
 
     def playAgain(self):
             self.gameWin.destroy()
