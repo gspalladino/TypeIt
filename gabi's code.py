@@ -7,6 +7,7 @@ import PIL.ImageTk as ImageTk
 
 class TypeItGame:
     def __init__(self):
+        '''makes opening window and references game window'''
         self.mainWin = tk.Tk()
         self.mainWin.geometry("350x450")
         self.mainWin['bg'] = 'ivory'
@@ -22,6 +23,8 @@ class TypeItGame:
         imgLabel.grid(row=0, column=0)
 
     def openGameWin(self):
+        '''This is the main game window. Theres a canvas with the bopit image on it.
+        There is also a point tally label.'''
         self.gameWin = tk.Toplevel(self.mainWin)
 
         bgBopit = Image.open("images/bopitbg3.png")
@@ -46,7 +49,10 @@ class TypeItGame:
         self.pointTallyLabel = tk.Label(self.gameWin, bg='ivory', fg='black', text=str(self.pointTally))
         self.pointTallyLabel.grid(row=0, column=2, sticky="w")
     def typeIt(self,event):
+        '''This function takes a key press as input and checks to see if it matches the prompt given.
+        If it does match, it generates a new prompt, if it doesn't it ends the game and opens the death screen'''
         keysym = event.keysym
+        self.position = [(205,138), (205,20), (205,240), (105,175), (320,75)]
         if self.pointTally == 0 and keysym in string.ascii_lowercase:
             self.pointTally += 1
             self.labelName(random.choice(string.ascii_lowercase))
@@ -78,16 +84,21 @@ class TypeItGame:
                 self.pointTally += 1
                 self.pointTallyLabel['text'] = self.pointTally
                 self.labelName(random.choice(string.ascii_letters))
+                x,y = random.choice(self.position)
+                self.promptCanvas.itemconfig(self.canvasText, x,y) #attempt to more canvas text
                 return print('point total:', self.pointTally)
             else:
                 print("you scored ", self.pointTally, " points")
                 self.openDeathScreen()
                 return
     def labelName(self,prompt):
+        '''Renames the prompt on the canvas to the new prompt'''
         self.prompt = prompt
         self.promptCanvas.itemconfig(self.canvasText, text=self.prompt)
 
     def openDeathScreen(self):
+        '''Is called when the user loses. Opens the death screen which shows final point tally.
+        Restart button calls playAgain function. Quit button calls quitGame function. '''
         print("Death screen should appear!")
         self.deathScreen = tk.Toplevel(self.mainWin)
         self.deathScreen.title("Game Over")
@@ -113,14 +124,18 @@ class TypeItGame:
         quitButton.pack(side='left', padx=5)
 
     def playAgain(self):
-            self.gameWin.destroy()
-            self.deathScreen.destroy()
-            self.openGameWin()
+        '''Resets game for player by destroying the game window and the death window,
+        and reopening the openGameWin'''
+        self.gameWin.destroy()
+        self.deathScreen.destroy()
+        self.openGameWin()
 
     def quitGame(self):
-            self.mainWin.destroy()
+        '''Destroys the main window'''
+        self.mainWin.destroy()
 
     def go(self):
+        '''Begins game play'''
         self.mainWin.mainloop()
 
 if __name__ == '__main__':
