@@ -32,7 +32,7 @@ class TypeItGame:
 
 
         # self.promptCanvas = tk.Canvas(self.gameWin, bg = 'green', width="350", height="400")
-        self.promptCanvas = tk.Canvas(self.gameWin, width="350", height="400")
+        self.promptCanvas = tk.Canvas(self.gameWin, width="350", height="300", bg="gainsboro")
         self.promptCanvas.grid(row = 0, column = 0)
 
         self.promptCanvas.create_image(50, 0, image=self.bg_image, anchor='nw')
@@ -103,18 +103,18 @@ class TypeItGame:
         self.deathScreen = tk.Toplevel(self.mainWin)
         self.deathScreen.title("Game Over")
         self.deathScreen.geometry("350x480")
-        self.deathScreen['bg'] = 'ivory'
+        self.deathScreen['bg'] = 'gainsboro'
 
-        gameOverLabel = tk.Label(self.deathScreen, text=f"Game over :(\nYou scored {self.pointTally} points.", bg='ivory', fg="red",
+        gameOverLabel = tk.Label(self.deathScreen, text=f"Game over :(\nYou scored {self.pointTally} points.", bg='gainsboro', fg="red",
                                  font="Comfortaa 20")
         gameOverLabel.pack(pady=10)
 
         brokentypeit = Image.open("images/broken3.png")
         self.broken_image = ImageTk.PhotoImage(brokentypeit)
-        brokenImageLabel = tk.Label(self.deathScreen, image=self.broken_image, bg='ivory')
+        brokenImageLabel = tk.Label(self.deathScreen, image=self.broken_image, bg='gainsboro')
         brokenImageLabel.pack(pady=5)
 
-        buttonFrame = tk.Frame(self.deathScreen, bg='ivory')
+        buttonFrame = tk.Frame(self.deathScreen, bg='gainsboro')
         buttonFrame.pack(pady=10)
 
         playAgainButton = tk.Button(buttonFrame, text="Play Again!", command=self.playAgain, bg='green', fg='green', font="Comfortaa")
