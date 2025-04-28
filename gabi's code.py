@@ -29,13 +29,13 @@ class TypeItGame:
 
 
         # self.promptCanvas = tk.Canvas(self.gameWin, bg = 'green', width="350", height="400")
-        self.promptCanvas = tk.Canvas(self.gameWin, width="350", height="400")
+        self.promptCanvas = tk.Canvas(self.gameWin, width="350", height="300", bg="gainsboro")
         self.promptCanvas.grid(row = 0, column = 0)
 
         self.promptCanvas.create_image(50, 0, image=self.bg_image, anchor='nw')
 
         self.gameWin.bind("<KeyPress>", self.typeIt)
-        self.canvasText = self.promptCanvas.create_text(205, 138, text = 'type!', fill='red', font="Comfortaa 40" )
+        self.canvasText = self.promptCanvas.create_text(320, 75, text = 'type!', fill='red', font="Comfortaa 40" )
         # self.promptEntry = tk.Entry(self.gameWin,bg = 'ivory', fg = 'black')
         # self.promptEntry.grid(row=1,column=0)
 
