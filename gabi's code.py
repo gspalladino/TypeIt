@@ -52,7 +52,13 @@ class TypeItGame:
         '''This function takes a key press as input and checks to see if it matches the prompt given.
         If it does match, it generates a new prompt, if it doesn't it ends the game and opens the death screen'''
         keysym = event.keysym
+        lowkeysym = keysym.lower()
         self.position = [(205,138), (205,20), (205,240), (105,175), (320,75)]
+        if keysym == 'Shift_L' or keysym == 'Shift_R':
+            capital = True
+            return print('Shift entered')
+        else:
+            capital = False
         if self.pointTally == 0 and keysym in string.ascii_lowercase:
             self.pointTally += 1
             self.labelName(random.choice(string.ascii_lowercase))
@@ -64,6 +70,8 @@ class TypeItGame:
                 self.pointTally += 1
                 self.pointTallyLabel['text'] = self.pointTally
                 self.labelName(random.choice(string.ascii_lowercase))
+                # x, y = random.choice(self.position)
+                # self.promptCanvas.itemconfig(self.canvasText, x= x,y = y)
                 return print('point total:', self.pointTally)
             else:
                 print("you scored ", self.pointTally," points")
@@ -80,12 +88,11 @@ class TypeItGame:
             #     # print("you scored ", self.pointTally, " points")
             #     self.openDeathScreen()
             #     return
-            if keysym == self.prompt:
+            if keysym == self.prompt or lowkeysym == self.prompt.lower() and capital == True:
                 self.pointTally += 1
                 self.pointTallyLabel['text'] = self.pointTally
                 self.labelName(random.choice(string.ascii_letters))
-                x,y = random.choice(self.position)
-                self.promptCanvas.itemconfig(self.canvasText, x,y) #attempt to more canvas text
+                 #attempt to more canvas text
                 return print('point total:', self.pointTally)
             else:
                 print("you scored ", self.pointTally, " points")

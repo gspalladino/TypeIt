@@ -23,9 +23,9 @@ class TypeItGame:
         self.pointTallyLabel.grid(row=0,column=1)
     def typeIt(self,event):
         keysym = event.keysym
-        if self.pointTally == 0 and keysym in string.ascii_lowercase:
+        if self.pointTally == 0 and keysym in string.ascii_letters:
             self.pointTally += 1
-            self.labelName(random.choice(string.ascii_lowercase))
+            self.labelName(random.choice(string.ascii_letters))
             return print('game started')
         while self.pointTally <= 100 and self.pointTally > 0:
             # inpStr = "type " + self.prompt + ":"
@@ -33,11 +33,11 @@ class TypeItGame:
             if keysym == self.prompt:
                 self.pointTally += 1
                 self.pointTallyLabel['text'] = self.pointTally
-                self.labelName(random.choice(string.ascii_lowercase))
+                self.labelName(random.choice(string.ascii_letters))
                 return print('point total:', self.pointTally)
             else:
                 print("you scored ", self.pointTally," points")
-                self.gameWin.destroy()
+                self.mainWin.destroy()
         while self.pointTally > 100 and self.pointTally <= 200:
             prompt = random.choice(string.ascii_letters)
             inpStr = 'type ' + prompt + ":"
