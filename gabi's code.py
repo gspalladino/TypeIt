@@ -38,7 +38,7 @@ class TypeItGame:
         self.promptCanvas.create_image(50, 0, image=self.bg_image, anchor='nw')
 
         self.gameWin.bind("<KeyPress>", self.typeIt)
-        self.canvasText = self.promptCanvas.create_text(205, 138, text = 'type any letter to start!', fill='red', font="Comfortaa 40" )
+        self.canvasText = self.promptCanvas.create_text(205, 138, text = 'type to start!', fill='red', font="Comfortaa 40" )
         # self.promptEntry = tk.Entry(self.gameWin,bg = 'ivory', fg = 'black')
         # self.promptEntry.grid(row=1,column=0)
 
