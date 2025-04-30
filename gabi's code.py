@@ -3,6 +3,8 @@ import string
 import tkinter as tk
 import PIL.Image as Image
 import PIL.ImageTk as ImageTk
+from pygame import mixer
+
 
 
 class TypeItGame:
@@ -29,6 +31,10 @@ class TypeItGame:
 
         bgBopit = Image.open("images/bopitbg3.png")
         self.bg_image = ImageTk.PhotoImage(bgBopit)
+
+        mixer.init()
+        mixer.music.load("music/beepboop.wav")
+        mixer.music.play(-1)
 
 
         # self.promptCanvas = tk.Canvas(self.gameWin, bg = 'green', width="350", height="400")
@@ -74,6 +80,7 @@ class TypeItGame:
             else:
                 print("you scored ", self.pointTally," points")
                 self.openDeathScreen()
+                # mixer.music.stop()
                 return
         while self.pointTally > 100 and self.pointTally <= 200:
             # prompt = random.choice(string.ascii_letters)
@@ -96,6 +103,7 @@ class TypeItGame:
             else:
                 print("you scored ", self.pointTally, " points")
                 self.openDeathScreen()
+                # mixer.music.stop()
                 return
     def labelName(self,prompt):
         '''Renames the prompt on the canvas to the new prompt'''
@@ -110,6 +118,10 @@ class TypeItGame:
         self.deathScreen.title("Game Over")
         self.deathScreen.geometry("350x480")
         self.deathScreen['bg'] = 'gainsboro'
+
+        mixer.music.stop()
+        mixer.music.load("music/death.mp3")
+        mixer.music.play(-1)
 
         gameOverLabel = tk.Label(self.deathScreen, text=f"Game over :(\nYou scored {self.pointTally} points.", bg='gainsboro', fg="red",
                                  font="Comfortaa 20")
