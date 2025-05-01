@@ -60,6 +60,7 @@ class TypeItGame:
         keysym = event.keysym
         lowkeysym = keysym.lower()
         self.position = [(205,138), (205,20), (205,240), (105,175), (320,75)]
+        self.level3 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z','gill','shy','hope','trap','pole','goal','fire','pore','tail','rare','pull','push','reel','hole','jape','tape','fail','true','how','nail','rot','tale','how','why','run','jump','fly','quit','make','bake','leap','year','tare','fall','tame','yell','tell','well','tick','stop','fact','blab','vase','base','till','use','welp','welt','tusk','word','lice','peat','bog','blog','drum','shoe','chew','hour','tow','mow']
         if keysym == 'Shift_L' or keysym == 'Shift_R':
             capital = True
             return print('Shift entered')
@@ -97,6 +98,19 @@ class TypeItGame:
                 self.pointTally += 1
                 self.pointTallyLabel['text'] = self.pointTally
                 self.labelName(random.choice(string.ascii_letters))
+                x, y = random.choice(self.position)
+                self.promptCanvas.moveto(self.canvasText, x=x, y=y)
+                return print('point total:', self.pointTally)
+            else:
+                print("you scored ", self.pointTally, " points")
+                self.openDeathScreen()
+                # mixer.music.stop()
+                return
+        while self.pointTally > 200 and self.pointTally <= 300:
+            if keysym == self.prompt or lowkeysym == self.prompt.lower() and capital == True:
+                self.pointTally += 1
+                self.pointTallyLabel['text'] = self.pointTally
+                self.labelName(random.choice(self.level3))
                 x, y = random.choice(self.position)
                 self.promptCanvas.moveto(self.canvasText, x=x, y=y)
                 return print('point total:', self.pointTally)
