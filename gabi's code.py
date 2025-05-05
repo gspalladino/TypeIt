@@ -24,6 +24,8 @@ class TypeItGame:
         imgLabel = tk.Label(self.mainWin, image=self.tracPic)
         imgLabel.grid(row=0, column=0)
 
+        self.timer_id = None
+
     def openGameWin(self):
         '''This is the main game window. Theres a canvas with the bopit image on it.
         There is also a point tally label.'''
@@ -33,7 +35,7 @@ class TypeItGame:
         self.bg_image = ImageTk.PhotoImage(bgBopit)
 
         mixer.init()
-        mixer.music.load("music/beepboop.wav")
+        mixer.music.load("music/gamenoise.mp3")
         mixer.music.play(-1)
 
 
@@ -73,6 +75,10 @@ class TypeItGame:
             # inpStr = "type " + self.prompt + ":"
             # userInp = input(inpStr)
             if keysym == self.prompt:
+                if self.timer_id is not None:
+                    self.gameWin.after_cancel(self.timer_id)
+                    self.timer_id = None #resets timer
+
                 self.pointTally += 1
                 self.pointTallyLabel['text'] = self.pointTally
                 self.labelName(random.choice(string.ascii_lowercase))
@@ -94,6 +100,10 @@ class TypeItGame:
             #     self.openDeathScreen()
             #     return
             if keysym == self.prompt or lowkeysym == self.prompt.lower() and capital == True:
+                if self.timer_id is not None:
+                    self.gameWin.after_cancel(self.timer_id)
+                    self.timer_id = None #resets timer
+
                 self.pointTally += 1
                 self.pointTallyLabel['text'] = self.pointTally
                 self.labelName(random.choice(string.ascii_letters))
@@ -110,6 +120,16 @@ class TypeItGame:
         self.prompt = prompt
         self.promptCanvas.itemconfig(self.canvasText, text=self.prompt)
 
+        if self.timer_id is not None:
+            self.gameWin.after_cancel(self.timer_id) #after_cancel input = id of timer to cancel
+
+        self.timer_id = self.gameWin.after(1500, self.end_timer) #1500 milliseconds= 1.5 second per entry (can change this maybe)
+        #found after() method on stackoverflow
+
+    def end_timer(self):
+        '''Opens death screen if the user fails to type in 1 second after each prompt is given'''
+        self.openDeathScreen()
+
     def openDeathScreen(self):
         '''Is called when the user loses. Opens the death screen which shows final point tally.
         Restart button calls playAgain function. Quit button calls quitGame function. '''
@@ -120,8 +140,8 @@ class TypeItGame:
         self.deathScreen['bg'] = 'gainsboro'
 
         mixer.music.stop()
-        mixer.music.load("music/death.mp3")
-        mixer.music.play(-1)
+        mixer.music.load("music/deathsound.mp3")
+        mixer.music.play()
 
         gameOverLabel = tk.Label(self.deathScreen, text=f"Game over :(\nYou scored {self.pointTally} points.", bg='gainsboro', fg="red",
                                  font="Comfortaa 20")
