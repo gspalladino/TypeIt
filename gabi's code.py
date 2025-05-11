@@ -63,13 +63,38 @@ class TypeItGame:
         lowkeysym = keysym.lower()
         self.position = [(205,138), (205,20), (205,240), (105,175), (320,75)]
         self.level3 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z','gill','shy','hope','trap','pole','goal','fire','pore','tail','rare','pull','push','reel','hole','jape','tape','fail','true','how','nail','rot','tale','how','why','run','jump','fly','quit','make','bake','leap','year','tare','fall','tame','yell','tell','well','tick','stop','fact','blab','vase','base','till','use','welp','welt','tusk','word','lice','peat','bog','blog','drum','shoe','chew','hour','tow','mow']
+        self.word = ''
         if keysym == 'Shift_L' or keysym == 'Shift_R':
             capital = True
             return print('Shift entered')
         else:
             capital = False
+        if self.pointTally > 0:
+            if len(self.prompt) == 3:
+                if keysym == self.prompt[0]:
+                    self.word += keysym
+                    return print('word word started')
+                if keysym == self.prompt[1]:
+                    self.word += keysym
+                    return print('word continued')
+                if keysym == self.prompt[2]:
+                    self.word += keysym
+                    return print('word continued')
+            if len(self.prompt) == 4:
+                if keysym == self.prompt[0]:
+                    self.word += keysym
+                    return print('word word started')
+                if keysym == self.prompt[1]:
+                    self.word += keysym
+                    return print('word continued')
+                if keysym == self.prompt[2]:
+                    self.word += keysym
+                    return print('word continued')
+                if keysym == self.prompt[3]:
+                    self.word += keysym
+                    return print('word ended')
         if self.pointTally == 0 and keysym in string.ascii_lowercase:
-            self.pointTally += 1
+            self.pointTally += 200
             self.labelName(random.choice(string.ascii_lowercase))
             return print('game started')
         while self.pointTally <= 100 and self.pointTally > 0:
@@ -117,7 +142,7 @@ class TypeItGame:
                 # mixer.music.stop()
                 return
         while self.pointTally > 200 and self.pointTally <= 300:
-            if keysym == self.prompt or lowkeysym == self.prompt.lower() and capital == True:
+            if keysym == self.prompt or lowkeysym == self.prompt.lower() and capital == True or self.prompt == self.word:
                 self.pointTally += 1
                 self.pointTallyLabel['text'] = self.pointTally
                 self.labelName(random.choice(self.level3))
