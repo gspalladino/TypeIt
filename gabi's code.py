@@ -40,7 +40,7 @@ class TypeItGame:
 
 
         # self.promptCanvas = tk.Canvas(self.gameWin, bg = 'green', width="350", height="400")
-        self.promptCanvas = tk.Canvas(self.gameWin, width="350", height="300", bg="gainsboro")
+        self.promptCanvas = tk.Canvas(self.gameWin, width="400", height="300", bg="gainsboro")
         self.promptCanvas.grid(row = 0, column = 0)
 
         self.promptCanvas.create_image(50, 0, image=self.bg_image, anchor='nw')
@@ -166,7 +166,7 @@ class TypeItGame:
         if self.timer_id is not None:
             self.gameWin.after_cancel(self.timer_id) #after_cancel input = id of timer to cancel
 
-        self.timer_id = self.gameWin.after(1500, self.end_timer) #1500 milliseconds= 1.5 second per entry (can change this maybe)
+        self.timer_id = self.gameWin.after(2000, self.end_timer) #2000 milliseconds= 2 seconds per entry (can change this maybe)
         #found after() method on stackoverflow
 
     def end_timer(self):
