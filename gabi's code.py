@@ -129,6 +129,10 @@ class TypeItGame:
                 self.openDeathScreen()
                 # mixer.music.stop()
                 return
+
+        if self.pointTally>300: #figuring out win screen
+            self.openWinScreen()
+            return
     def labelName(self,prompt):
         '''Renames the prompt on the canvas to the new prompt'''
         self.prompt = prompt
@@ -167,6 +171,33 @@ class TypeItGame:
         brokenImageLabel.pack(pady=5)
 
         buttonFrame = tk.Frame(self.deathScreen, bg='gainsboro')
+        buttonFrame.pack(pady=10)
+
+        playAgainButton = tk.Button(buttonFrame, text="Play Again!", command=self.playAgain, bg='green', fg='green', font="Comfortaa")
+        playAgainButton.pack(side='left', padx=5)
+
+        quitButton = tk.Button(buttonFrame, text="Quit", command=self.quitGame, bg='red', fg='black', font="Comfortaa")
+        quitButton.pack(side='left', padx=5)
+
+    def openWinScreen(self):
+        '''Is called when the user wins/beats level 300. Opens the win screen.
+        Restart button calls playAgain function. Quit button calls quitGame function. '''
+        print("win screen should appear!")
+        self.winScreen = tk.Toplevel(self.mainWin)
+        self.winScreen.title("You Win!")
+        self.winScreen.geometry("350x480")
+        self.winScreen['bg'] = 'gainsboro'
+
+        mixer.music.stop()
+        mixer.music.load("music/winsound.mp3")
+        mixer.music.play()
+
+        winLabel = tk.Label(self.winScreen, text=f"You Win! :(\nYou scored 300 points!", bg='gainsboro', fg="red",
+                                 font="Comfortaa 20")
+        winLabel.pack(pady=10)
+
+
+        buttonFrame = tk.Frame(self.winScreen, bg='gainsboro')
         buttonFrame.pack(pady=10)
 
         playAgainButton = tk.Button(buttonFrame, text="Play Again!", command=self.playAgain, bg='green', fg='green', font="Comfortaa")
