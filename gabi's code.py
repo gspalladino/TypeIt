@@ -13,7 +13,7 @@ class TypeItGame:
         self.mainWin = tk.Tk()
         self.mainWin.geometry("350x450")
         self.mainWin['bg'] = 'ivory'
-        self.startButton = tk.Button(bg = 'green', text = 'Start Game', padx = 10, pady = 10, fg='red', font="Comfortaa 40", command = self.openGameWin)
+        self.startButton = tk.Button(bg = 'green', text = 'Start Game', padx = 10, pady = 10, fg='red', font="Consolas 40", command = self.openGameWin)
         self.startButton.grid(row = 1, column =0)
 
 
@@ -25,6 +25,7 @@ class TypeItGame:
         imgLabel.grid(row=0, column=0)
 
         self.timer_id = None
+        self.gameOver = False
 
     def openGameWin(self):
         '''This is the main game window. Theres a canvas with the bopit image on it.
@@ -46,7 +47,7 @@ class TypeItGame:
         self.promptCanvas.create_image(50, 0, image=self.bg_image, anchor='nw')
 
         self.gameWin.bind("<KeyPress>", self.typeIt)
-        self.canvasText = self.promptCanvas.create_text(205, 138, text = 'type to start!', fill='red', font="Comfortaa 40" )
+        self.canvasText = self.promptCanvas.create_text(205, 138, text = 'type to start!', fill='red', font="Consolas 40" )
         # self.promptEntry = tk.Entry(self.gameWin,bg = 'ivory', fg = 'black')
         # self.promptEntry.grid(row=1,column=0)
 
@@ -59,6 +60,10 @@ class TypeItGame:
     def typeIt(self,event):
         '''This function takes a key press as input and checks to see if it matches the prompt given.
         If it does match, it generates a new prompt, if it doesn't it ends the game and opens the death screen'''
+
+        if self.gameOver:
+            return
+
         keysym = event.keysym
         lowkeysym = keysym.lower()
         self.position = [(205,138), (205,20), (205,240), (105,175), (320,75)]
@@ -154,9 +159,10 @@ class TypeItGame:
                 # mixer.music.stop()
                 return
 
-        if self.pointTally>300: #figuring out win screen
+        if self.pointTally>300:
             self.openWinScreen()
             return
+
     def labelName(self,prompt):
         '''Renames the prompt on the canvas to the new prompt'''
         self.prompt = prompt
@@ -178,6 +184,8 @@ class TypeItGame:
 
     def endtimer(self):
         '''Opens death screen if the user fails to type in 1 second after each prompt is given'''
+        if self.gameOver:
+            return
         self.openDeathScreen()
 
     def openDeathScreen(self):
@@ -211,6 +219,10 @@ class TypeItGame:
         quitButton = tk.Button(buttonFrame, text="Quit", command=self.quitGame, bg='red', fg='black', font="Comfortaa")
         quitButton.pack(side='left', padx=5)
 
+        if self.gameOver:
+            return
+        self.gameOver = True
+
     def openWinScreen(self):
         '''Is called when the user wins/beats level 300. Opens the win screen.
         Restart button calls playAgain function. Quit button calls quitGame function. '''
@@ -224,7 +236,7 @@ class TypeItGame:
         mixer.music.load("music/winsound.mp3")
         mixer.music.play()
 
-        winLabel = tk.Label(self.winScreen, text=f"You Win! :(\nYou scored 300 points!", bg='gainsboro', fg="red",
+        winLabel = tk.Label(self.winScreen, text=f"You Win!!! \nYou scored 300 points!", bg='gainsboro', fg="red",
                                  font="Comfortaa 20")
         winLabel.pack(pady=10)
 
@@ -232,19 +244,30 @@ class TypeItGame:
         buttonFrame = tk.Frame(self.winScreen, bg='gainsboro')
         buttonFrame.pack(pady=10)
 
-        playAgainButton = tk.Button(buttonFrame, text="Play Again!", command=self.playAgain, bg='green', fg='green', font="Comfortaa")
+        playAgainButton = tk.Button(buttonFrame, text="Play Again!", command=self.playAgainAfterWin, bg='green', fg='green', font="Comfortaa")
         playAgainButton.pack(side='left', padx=5)
 
         quitButton = tk.Button(buttonFrame, text="Quit", command=self.quitGame, bg='red', fg='black', font="Comfortaa")
         quitButton.pack(side='left', padx=5)
 
+        if self.gameOver:
+            return
+        self.gameOver = True
+
     def playAgain(self):
         '''Resets game for player by destroying the game window and the death window,
-        and reopening the openGameWin'''
+        and reopening the game winow'''
+        self.gameOver = False
         self.gameWin.destroy()
         self.deathScreen.destroy()
         self.openGameWin()
 
+    def playAgainAfterWin(self):
+        "Resets game for player by destroying the game window and the win screen, and reopening the game window. "
+        self.gameOver = False
+        self.gameWin.destroy()
+        self.winScreen.destroy()
+        self.openGameWin()
     def quitGame(self):
         '''Destroys the main window'''
         self.mainWin.destroy()
