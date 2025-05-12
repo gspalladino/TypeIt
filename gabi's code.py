@@ -118,16 +118,6 @@ class TypeItGame:
                 # mixer.music.stop()
                 return
         while self.pointTally > 100 and self.pointTally <= 200:
-            # prompt = random.choice(string.ascii_letters)
-            # inpStr = 'type ' + prompt + ":"
-            # userInp = input(inpStr)
-            # if userInp == prompt:
-            #     self.pointTally += 1
-            #     print(self.pointTally)
-            # else:
-            #     # print("you scored ", self.pointTally, " points")
-            #     self.openDeathScreen()
-            #     return
             if keysym == self.prompt or lowkeysym == self.prompt.lower() and capital == True:
                 if self.timer_id is not None:
                     self.gameWin.after_cancel(self.timer_id)
@@ -142,7 +132,6 @@ class TypeItGame:
             else:
                 print("you scored ", self.pointTally, " points")
                 self.openDeathScreen()
-                # mixer.music.stop()
                 return
         while self.pointTally > 200 and self.pointTally <= 300:
             if keysym == self.prompt or lowkeysym == self.prompt.lower() and capital == True or self.word == self.prompt:
@@ -156,7 +145,6 @@ class TypeItGame:
             else:
                 print("you scored ", self.pointTally, " points")
                 self.openDeathScreen()
-                # mixer.music.stop()
                 return
 
         if self.pointTally>300:
@@ -171,8 +159,7 @@ class TypeItGame:
         if self.timer_id is not None:
             self.gameWin.after_cancel(self.timer_id) #after_cancel input = id of timer to cancel
 
-        self.timer_id = self.gameWin.after(3000, self.endtimer) #3000 milliseconds= 2 seconds per entry (can change this maybe)
-        #found after() method on stackoverflow
+        self.timer_id = self.gameWin.after(3000, self.endtimer) #3000 milliseconds= 3 seconds per entry 
 
 
     word = ''
