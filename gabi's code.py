@@ -166,10 +166,10 @@ class TypeItGame:
         if self.timer_id is not None:
             self.gameWin.after_cancel(self.timer_id) #after_cancel input = id of timer to cancel
 
-        self.timer_id = self.gameWin.after(3000, self.end_timer) #3000 milliseconds= 2 seconds per entry (can change this maybe)
+        self.timer_id = self.gameWin.after(3000, self.endtimer) #3000 milliseconds= 2 seconds per entry (can change this maybe)
         #found after() method on stackoverflow
 
-    def end_timer(self):
+    def endtimer(self):
         '''Opens death screen if the user fails to type in 1 second after each prompt is given'''
         self.openDeathScreen()
 
