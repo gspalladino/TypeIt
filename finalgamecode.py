@@ -115,7 +115,6 @@ class TypeItGame:
             else:
                 print("you scored ", self.pointTally," points")
                 self.openDeathScreen()
-                # mixer.music.stop()
                 return
         while self.pointTally > 100 and self.pointTally <= 200:
             if keysym == self.prompt or lowkeysym == self.prompt.lower() and capital == True:
