@@ -40,7 +40,7 @@ class TypeItGame:
 
 
         # self.promptCanvas = tk.Canvas(self.gameWin, bg = 'green', width="350", height="400")
-        self.promptCanvas = tk.Canvas(self.gameWin, width="350", height="300", bg="gainsboro")
+        self.promptCanvas = tk.Canvas(self.gameWin, width="400", height="300", bg="gainsboro")
         self.promptCanvas.grid(row = 0, column = 0)
 
         self.promptCanvas.create_image(50, 0, image=self.bg_image, anchor='nw')
@@ -92,7 +92,7 @@ class TypeItGame:
                     self.wordEntered(keysym)
 
         if self.pointTally == 0 and keysym in string.ascii_lowercase:
-            self.pointTally += 200
+            self.pointTally += 1
             self.labelName(random.choice(string.ascii_lowercase))
             return print('game started')
         while self.pointTally <= 100 and self.pointTally > 0:
@@ -146,12 +146,17 @@ class TypeItGame:
                 self.labelName(random.choice(self.level3))
                 x, y = random.choice(self.position)
                 self.promptCanvas.moveto(self.canvasText, x=x, y=y)
+                self.word = ''
                 return print('point total:', self.pointTally)
             else:
                 print("you scored ", self.pointTally, " points")
                 self.openDeathScreen()
                 # mixer.music.stop()
                 return
+
+        if self.pointTally>300: #figuring out win screen
+            self.openWinScreen()
+            return
     def labelName(self,prompt):
         '''Renames the prompt on the canvas to the new prompt'''
         self.prompt = prompt
@@ -160,8 +165,9 @@ class TypeItGame:
         if self.timer_id is not None:
             self.gameWin.after_cancel(self.timer_id) #after_cancel input = id of timer to cancel
 
-        self.timer_id = self.gameWin.after(1500, self.end_timer) #1500 milliseconds= 1.5 second per entry (can change this maybe)
+        self.timer_id = self.gameWin.after(3000, self.endtimer) #3000 milliseconds= 2 seconds per entry (can change this maybe)
         #found after() method on stackoverflow
+
 
     word = ''
 
@@ -170,8 +176,7 @@ class TypeItGame:
         # if self.word in self.level3:
         #     self.word = ''
 
-
-    def end_timer(self):
+    def endtimer(self):
         '''Opens death screen if the user fails to type in 1 second after each prompt is given'''
         self.openDeathScreen()
 
@@ -198,6 +203,33 @@ class TypeItGame:
         brokenImageLabel.pack(pady=5)
 
         buttonFrame = tk.Frame(self.deathScreen, bg='gainsboro')
+        buttonFrame.pack(pady=10)
+
+        playAgainButton = tk.Button(buttonFrame, text="Play Again!", command=self.playAgain, bg='green', fg='green', font="Comfortaa")
+        playAgainButton.pack(side='left', padx=5)
+
+        quitButton = tk.Button(buttonFrame, text="Quit", command=self.quitGame, bg='red', fg='black', font="Comfortaa")
+        quitButton.pack(side='left', padx=5)
+
+    def openWinScreen(self):
+        '''Is called when the user wins/beats level 300. Opens the win screen.
+        Restart button calls playAgain function. Quit button calls quitGame function. '''
+        print("win screen should appear!")
+        self.winScreen = tk.Toplevel(self.mainWin)
+        self.winScreen.title("You Win!")
+        self.winScreen.geometry("350x480")
+        self.winScreen['bg'] = 'gainsboro'
+
+        mixer.music.stop()
+        mixer.music.load("music/winsound.mp3")
+        mixer.music.play()
+
+        winLabel = tk.Label(self.winScreen, text=f"You Win! :(\nYou scored 300 points!", bg='gainsboro', fg="red",
+                                 font="Comfortaa 20")
+        winLabel.pack(pady=10)
+
+
+        buttonFrame = tk.Frame(self.winScreen, bg='gainsboro')
         buttonFrame.pack(pady=10)
 
         playAgainButton = tk.Button(buttonFrame, text="Play Again!", command=self.playAgain, bg='green', fg='green', font="Comfortaa")
